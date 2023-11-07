@@ -32,9 +32,6 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `telefone` varchar(11) DEFAULT NULL,
-  `nascimento` date DEFAULT NULL,
-  `data` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 

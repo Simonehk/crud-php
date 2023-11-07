@@ -1,8 +1,5 @@
 <?php
 
-function limpar_texto($str){ 
-    return preg_replace("/[^0-9]/", "", $str); 
-}
 
 if(count($_POST) > 0) {
 
@@ -11,8 +8,7 @@ if(count($_POST) > 0) {
     $erro = false;
     $nome = $_POST['nome'];
     $email = $_POST['email'];
-    $telefone = $_POST['telefone'];
-    $nascimento = $_POST['nascimento'];
+   
 
     if(empty($nome)) {
         $erro = "Preencha o nome";
@@ -21,26 +17,13 @@ if(count($_POST) > 0) {
         $erro = "Preencha o e-mail";
     }
 
-    if(!empty($nascimento)) { 
-        $pedacos = explode('/', $nascimento);
-        if(count($pedacos) == 3) {
-            $nascimento = implode ('-', array_reverse($pedacos));
-        } else {
-            $erro = "A data de nascimento deve seguir o padrão dia/mes/ano.";
-        }
-    }
-
-    if(!empty($telefone)) {
-        $telefone = limpar_texto($telefone);
-        if(strlen($telefone) != 11)
-            $erro = "O telefone deve ser preenchido no padrão (11) 98888-8888";
-    }
+   
 
     if($erro) {
         echo "<p><b>ERRO: $erro</b></p>";
     } else {
-        $sql_code = "INSERT INTO clientes (nome, email, telefone, nascimento, data) 
-        VALUES ('$nome', '$email', '$telefone', '$nascimento', NOW())";
+        $sql_code = "INSERT INTO clientes (nome, email) 
+        VALUES ('$nome', '$email')";
         $deu_certo = $mysqli->query($sql_code) or die($mysqli->error);
         if($deu_certo) {
             echo "<p><b>Cliente cadastrado com sucesso!!!</b></p>";
@@ -70,14 +53,7 @@ if(count($_POST) > 0) {
             <label>E-mail:</label>
             <input value="<?php if(isset($_POST['email'])) echo $_POST['email']; ?>" name="email" type="text">
         </p>
-        <p>
-            <label>Telefone:</label>
-            <input value="<?php if(isset($_POST['telefone'])) echo $_POST['telefone']; ?>"  placeholder="(11) 98888-8888" name="telefone" type="text">
-        </p>
-        <p>
-            <label>Data de Nascimento:</label>
-            <input value="<?php if(isset($_POST['nascimento'])) echo $_POST['nascimento']; ?>"  name="nascimento" type="text">
-        </p>
+        
         <p>
             <button type="submit">Salvar Cliente</button>
         </p>
